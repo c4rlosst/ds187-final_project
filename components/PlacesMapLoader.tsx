@@ -3,9 +3,9 @@
 import dynamic from "next/dynamic";
 
 // Leaflet touches `window` on import, so the map must only load in the browser.
-const MapView = dynamic(() => import("./MapView"), {
+const PlacesMap = dynamic(() => import("./PlacesMap"), {
   ssr: false,
-  loading: () => <p>Loading map...</p>,
+  loading: () => <p className="p-4">Loading map...</p>,
 });
 
-export default MapView;
+export default PlacesMap;

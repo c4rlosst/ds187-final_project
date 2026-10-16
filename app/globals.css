@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+/* Crosshair cursor while choosing a location for a new place. */
+.leaflet-container.picking-mode,
+.leaflet-container.picking-mode .leaflet-interactive {
+  cursor: crosshair;
+}

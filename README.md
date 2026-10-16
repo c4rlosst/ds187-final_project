@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nutrition Cookbook
 
-## Getting Started
+A nutrition cookbook built with Next.js and Supabase.
 
-First, run the development server:
+- **Recipes**: nutritious recipes with approximate nutrition per serving. Filter by the ingredients you want (match all or any selected).
+- **Map**: a map of food places. Anyone can search an address and log a new place.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Setup
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Install dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```bash
+   npm install
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Create `.env.local` in the project root with your Supabase project URL and publishable key (Supabase dashboard, Connect button):
 
-## Learn More
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=https://<your-project-ref>.supabase.co
+   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_...
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+3. Create the database. In the Supabase SQL editor, run these files in order:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   1. `supabase/schema.sql` creates the tables, constraints and row level security policies.
+   2. `supabase/seed.sql` adds sample recipes, ingredients and a few sample places. Both files can be re-run safely.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. Start the dev server:
 
-## Deploy on Vercel
+   ```bash
+   npm run dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   Open http://localhost:3000.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Free Supabase projects pause after a week of inactivity. If the pages say they could not reach Supabase, restore the project from the Supabase dashboard.
+
+## Project layout
+
+- `app/` pages: home, `recipes`, `recipes/[id]`, `map`
+- `components/` the recipe browser and the Leaflet map
+- `lib/` data access, types and the ingredient filter
+- `utils/supabase/` browser and server Supabase clients
+- `supabase/` database schema and sample data
+
+## Notes
+
+- Places can be logged by anyone without signing in. Visitors cannot edit or delete places; do that in the Supabase dashboard (the seed's sample places can be removed with `delete from public.places where name like 'Sample %';`).
+- Map tiles and address search use OpenStreetMap and Nominatim, which need no API key but are meant for light use.
+- Nutrition values in the sample data are approximate.
