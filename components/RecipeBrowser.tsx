@@ -36,8 +36,8 @@ export default function RecipeBrowser({ recipes }: { recipes: Recipe[] }) {
   }
 
   return (
-    <div className="grid gap-6 md:grid-cols-[16rem_1fr]">
-      <aside className="flex flex-col gap-3">
+    <div className="grid items-start gap-6 md:grid-cols-[16rem_1fr]">
+      <aside className="card flex flex-col gap-3 md:sticky md:top-4">
         <h2 className="font-semibold">Ingredients</h2>
 
         <input
@@ -46,15 +46,16 @@ export default function RecipeBrowser({ recipes }: { recipes: Recipe[] }) {
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search ingredients"
           aria-label="Search ingredients"
-          className="rounded border px-2 py-1"
+          className="input"
         />
 
-        <fieldset className="flex flex-col gap-1">
-          <legend className="mb-1 text-sm">Show recipes that contain</legend>
+        <fieldset className="flex flex-col gap-1 text-sm">
+          <legend className="mb-1 text-stone-600">Show recipes that contain</legend>
           <label className="flex items-center gap-2">
             <input
               type="radio"
               name="mode"
+              className="accent-emerald-700"
               checked={mode === "all"}
               onChange={() => setMode("all")}
             />
@@ -64,6 +65,7 @@ export default function RecipeBrowser({ recipes }: { recipes: Recipe[] }) {
             <input
               type="radio"
               name="mode"
+              className="accent-emerald-700"
               checked={mode === "any"}
               onChange={() => setMode("any")}
             />
@@ -71,24 +73,25 @@ export default function RecipeBrowser({ recipes }: { recipes: Recipe[] }) {
           </label>
         </fieldset>
 
-        <div className="flex items-center justify-between text-sm">
+        <div className="flex items-center justify-between text-sm text-stone-600">
           <span>{selected.length} selected</span>
           <button
             type="button"
             onClick={() => setSelected([])}
             disabled={selected.length === 0}
-            className="underline disabled:no-underline disabled:opacity-40"
+            className="link disabled:cursor-not-allowed disabled:no-underline disabled:opacity-40"
           >
             Clear
           </button>
         </div>
 
-        <ul className="flex max-h-96 flex-col gap-1 overflow-y-auto">
+        <ul className="flex max-h-80 flex-col gap-1 overflow-y-auto border-t border-stone-200 pt-3 text-sm">
           {visibleIngredients.map((name) => (
             <li key={name}>
               <label className="flex items-center gap-2 capitalize">
                 <input
                   type="checkbox"
+                  className="accent-emerald-700"
                   checked={selected.includes(name)}
                   onChange={() => toggle(name)}
                 />
@@ -97,18 +100,18 @@ export default function RecipeBrowser({ recipes }: { recipes: Recipe[] }) {
             </li>
           ))}
           {visibleIngredients.length === 0 && (
-            <li className="text-sm">No ingredients match.</li>
+            <li className="text-stone-500">No ingredients match.</li>
           )}
         </ul>
       </aside>
 
       <section className="flex flex-col gap-4">
-        <h2 className="font-semibold">
+        <h2 className="font-semibold text-stone-700">
           {results.length} {results.length === 1 ? "recipe" : "recipes"}
         </h2>
 
         {results.length === 0 && (
-          <p>
+          <p className="card text-stone-600">
             {recipes.length === 0
               ? "No recipes yet."
               : "No recipes match those ingredients. Try \"any selected\" or remove an ingredient."}
@@ -117,29 +120,43 @@ export default function RecipeBrowser({ recipes }: { recipes: Recipe[] }) {
 
         <ul className="flex flex-col gap-4">
           {results.map(({ recipe, matched }) => (
-            <li key={recipe.id} className="rounded border p-4">
+            <li key={recipe.id} className="card transition-shadow hover:shadow-md">
               <h3 className="text-lg font-semibold">
-                <Link href={`/recipes/${recipe.id}`} className="underline">
+                <Link
+                  href={`/recipes/${recipe.id}`}
+                  className="hover:text-emerald-800 hover:underline"
+                >
                   {recipe.title}
                 </Link>
               </h3>
-              {recipe.description && <p>{recipe.description}</p>}
+              {recipe.description && (
+                <p className="mt-1 text-stone-600">{recipe.description}</p>
+              )}
 
-              <p className="mt-2 text-sm">
-                {recipe.calories ?? "?"} kcal · protein {recipe.protein_g ?? "?"} g ·
-                carbs {recipe.carbs_g ?? "?"} g · fat {recipe.fat_g ?? "?"} g ·
-                fiber {recipe.fiber_g ?? "?"} g
-                {recipe.servings && recipe.servings > 1
-                  ? ` per serving (makes ${recipe.servings})`
-                  : " per serving"}
-              </p>
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <span className="badge badge-accent">
+                  {recipe.calories ?? "?"} kcal
+                </span>
+                <span className="badge">protein {recipe.protein_g ?? "?"} g</span>
+                <span className="badge">carbs {recipe.carbs_g ?? "?"} g</span>
+                <span className="badge">fat {recipe.fat_g ?? "?"} g</span>
+                <span className="badge">fiber {recipe.fiber_g ?? "?"} g</span>
+                <span className="text-xs text-stone-500">
+                  per serving
+                  {recipe.servings && recipe.servings > 1
+                    ? ` (makes ${recipe.servings})`
+                    : ""}
+                </span>
+              </div>
 
-              <p className="mt-2 text-sm capitalize">
+              <p className="mt-3 text-sm capitalize text-stone-600">
                 {recipe.ingredients.map((ingredient, index) => (
                   <span
                     key={ingredient.name}
                     className={
-                      selected.includes(ingredient.name) ? "font-bold" : undefined
+                      selected.includes(ingredient.name)
+                        ? "font-semibold text-emerald-800"
+                        : undefined
                     }
                   >
                     {index > 0 && ", "}
@@ -149,7 +166,7 @@ export default function RecipeBrowser({ recipes }: { recipes: Recipe[] }) {
               </p>
 
               {selected.length > 0 && (
-                <p className="mt-1 text-sm">
+                <p className="mt-2 text-sm font-medium text-emerald-800">
                   Matches {matched} of {selected.length} selected
                 </p>
               )}

@@ -143,7 +143,7 @@ export default function PlacesExplorer({
 
   return (
     <div className="grid gap-4 lg:grid-cols-[1fr_20rem]">
-      <div className="h-[60vh] min-h-80 w-full overflow-hidden rounded border">
+      <div className="h-[60vh] min-h-80 w-full overflow-hidden rounded-lg border border-stone-200 shadow-sm">
         <PlacesMapLoader
           places={places}
           center={center}
@@ -162,54 +162,54 @@ export default function PlacesExplorer({
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search an address or place"
             aria-label="Search an address or place"
-            className="min-w-0 flex-1 rounded border px-2 py-1"
+            className="input min-w-0 flex-1"
           />
-          <button
-            type="submit"
-            disabled={searching}
-            className="rounded border px-3 py-1 disabled:opacity-50"
-          >
+          <button type="submit" disabled={searching} className="btn">
             {searching ? "Searching..." : "Search"}
           </button>
         </form>
-        {searchMessage && <p role="status">{searchMessage}</p>}
+        {searchMessage && (
+          <p role="status" className="text-sm text-stone-600">
+            {searchMessage}
+          </p>
+        )}
 
         {!adding ? (
           <button
             type="button"
             onClick={startAdding}
-            className="rounded border px-3 py-1"
+            className="btn btn-primary"
           >
             Log a food place
           </button>
         ) : (
-          <form onSubmit={save} className="flex flex-col gap-3 rounded border p-3">
+          <form onSubmit={save} className="card flex flex-col gap-3">
             <h2 className="font-semibold">Log a food place</h2>
-            <p className="text-sm">
+            <p className="text-sm text-stone-600">
               {draft
                 ? `Location set (${draft[0].toFixed(5)}, ${draft[1].toFixed(5)}). Drag the pin to adjust.`
                 : "Click the map or search an address to set the location."}
             </p>
 
-            <label className="flex flex-col gap-1 text-sm">
+            <label className="flex flex-col gap-1 text-sm font-medium text-stone-700">
               Name
               <input
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 maxLength={100}
                 required
-                className="rounded border px-2 py-1"
+                className="input font-normal"
               />
             </label>
 
-            <label className="flex flex-col gap-1 text-sm">
+            <label className="flex flex-col gap-1 text-sm font-medium text-stone-700">
               Category
               <select
                 value={form.category}
                 onChange={(e) =>
                   setForm({ ...form, category: e.target.value as PlaceCategory })
                 }
-                className="rounded border px-2 py-1 capitalize"
+                className="input font-normal capitalize"
               >
                 {PLACE_CATEGORIES.map((category) => (
                   <option key={category} value={category}>
@@ -219,34 +219,38 @@ export default function PlacesExplorer({
               </select>
             </label>
 
-            <label className="flex flex-col gap-1 text-sm">
+            <label className="flex flex-col gap-1 text-sm font-medium text-stone-700">
               Description (optional)
               <textarea
                 value={form.description}
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
                 maxLength={500}
                 rows={3}
-                className="rounded border px-2 py-1"
+                className="input font-normal"
               />
             </label>
 
-            <label className="flex flex-col gap-1 text-sm">
+            <label className="flex flex-col gap-1 text-sm font-medium text-stone-700">
               Address (optional)
               <input
                 value={form.address}
                 onChange={(e) => setForm({ ...form, address: e.target.value })}
                 maxLength={300}
-                className="rounded border px-2 py-1"
+                className="input font-normal"
               />
             </label>
 
-            {formError && <p role="alert">{formError}</p>}
+            {formError && (
+              <p role="alert" className="alert">
+                {formError}
+              </p>
+            )}
 
             <div className="flex gap-2">
               <button
                 type="submit"
                 disabled={saving}
-                className="rounded border px-3 py-1 disabled:opacity-50"
+                className="btn btn-primary"
               >
                 {saving ? "Saving..." : "Save place"}
               </button>
@@ -254,7 +258,7 @@ export default function PlacesExplorer({
                 type="button"
                 onClick={cancelAdding}
                 disabled={saving}
-                className="rounded border px-3 py-1"
+                className="btn"
               >
                 Cancel
               </button>
@@ -262,24 +266,26 @@ export default function PlacesExplorer({
           </form>
         )}
 
-        <section>
+        <section className="card">
           <h2 className="mb-2 font-semibold">
             {places.length} {places.length === 1 ? "place" : "places"}
           </h2>
           {places.length === 0 ? (
-            <p className="text-sm">No places logged yet. Be the first.</p>
+            <p className="text-sm text-stone-600">
+              No places logged yet. Be the first.
+            </p>
           ) : (
-            <ul className="flex max-h-72 flex-col gap-1 overflow-y-auto">
+            <ul className="flex max-h-72 flex-col divide-y divide-stone-100 overflow-y-auto">
               {places.map((place) => (
-                <li key={place.id}>
+                <li key={place.id} className="py-2 first:pt-0 last:pb-0">
                   <button
                     type="button"
                     onClick={() => setFlyTo({ lat: place.lat, lng: place.lng })}
-                    className="w-full text-left underline"
+                    className="w-full text-left hover:text-emerald-800"
                   >
-                    {place.name}
-                  </button>{" "}
-                  <span className="text-sm capitalize">({place.category})</span>
+                    <span className="font-medium">{place.name}</span>
+                    <span className="badge ml-2 capitalize">{place.category}</span>
+                  </button>
                 </li>
               ))}
             </ul>
