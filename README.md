@@ -25,7 +25,11 @@ A nutrition cookbook built with Next.js and Supabase.
    1. `supabase/schema.sql` creates the tables, constraints and row level security policies.
    2. `supabase/seed.sql` adds sample recipes, ingredients and a few sample places. Both files can be re-run safely.
 
-4. Start the dev server:
+4. Set up sign-in. The site uses Supabase Auth with email and password. In the Supabase dashboard, under Authentication:
+   - For quick local testing, turn off "Confirm email" (Sign In / Providers, Email). People can then sign up and sign in straight away.
+   - If you keep "Confirm email" on, set the Site URL to `http://localhost:3000` and add `http://localhost:3000/**` to the Redirect URLs, so the confirmation link brings people back to the site.
+
+5. Start the dev server:
 
    ```bash
    npm run dev

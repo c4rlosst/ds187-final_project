@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server";
+import { createPublicClient } from "@/utils/supabase/public";
 import type { Recipe } from "./types";
 
 type RecipeRow = Omit<Recipe, "ingredients"> & {
@@ -23,7 +23,7 @@ export async function getRecipes(): Promise<{
   recipes: Recipe[];
   error: string | null;
 }> {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from("recipes")
     .select(COLUMNS)
@@ -36,7 +36,7 @@ export async function getRecipe(id: number): Promise<{
   recipe: Recipe | null;
   error: string | null;
 }> {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from("recipes")
     .select(COLUMNS)

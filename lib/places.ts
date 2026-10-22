@@ -1,11 +1,11 @@
-import { createClient } from "@/utils/supabase/server";
+import { createPublicClient } from "@/utils/supabase/public";
 import type { Place } from "./types";
 
 export async function getPlaces(): Promise<{
   places: Place[];
   error: string | null;
 }> {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from("places")
     .select("id, name, category, description, address, lat, lng, created_at")
