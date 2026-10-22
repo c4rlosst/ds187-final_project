@@ -1,6 +1,6 @@
-# Nutrition Cookbook
+# Nourio
 
-A nutrition cookbook built with Next.js and Supabase.
+Nourio is a nutrition cookbook built with Next.js and Supabase.
 
 - **Recipes**: nutritious recipes with approximate nutrition per serving. Filter by the ingredients you want (match all or any selected).
 - **Map**: a map of food places. Anyone can search an address and log a new place.

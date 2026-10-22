@@ -1,4 +1,4 @@
--- Sample data for the nutrition cookbook. Run schema.sql first.
+-- Sample data for Nourio. Run schema.sql first.
 -- Safe to re-run: existing rows are skipped.
 -- Nutrition values are approximate, per serving.
 

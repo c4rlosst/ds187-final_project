@@ -1,4 +1,4 @@
--- Nutrition cookbook schema.
+-- Nourio schema.
 -- Run this first in the Supabase SQL editor, then run seed.sql.
 -- Safe to re-run: tables are only created if missing and policies are recreated.
 

@@ -6,7 +6,7 @@ export default function Home() {
       <div className="flex flex-col gap-3">
         <p className="text-lg font-medium text-emerald-800">Hello World</p>
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-          Nutrition Cookbook
+          Nourio
         </h1>
         <p className="max-w-2xl text-lg text-stone-600">
           Browse nutritious recipes with their nutrition facts, filter them by
