@@ -6,9 +6,9 @@ import NavLinks from "@/components/NavLinks";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Nourio",
+  title: "PalletePlate",
   description:
-    "Nutritious recipes you can filter by ingredient, plus a map of food places.",
+    "Filipino food, meal logging, and everyday variety through fruit and vegetable colours.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -19,7 +19,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <header className="border-b border-stone-200 bg-white">
             <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-6 py-3">
               <Link href="/" className="text-lg font-semibold text-emerald-800">
-                Nourio
+                PalletePlate
               </Link>
               <div className="flex items-center gap-3">
                 <NavLinks />
@@ -32,7 +32,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </main>
           <footer className="border-t border-stone-200 bg-white">
             <div className="mx-auto max-w-5xl px-6 py-4 text-sm text-stone-500">
-              Nourio
+              PalletePlate
             </div>
           </footer>
         </AuthProvider>

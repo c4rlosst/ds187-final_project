@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   // opening the site via 127.0.0.1 blocks the dev connection and client-only
   // components (like the map) never finish loading.
   allowedDevOrigins: ["127.0.0.1"],
-  // Stop `next dev` from generating AGENTS.md / CLAUDE.md in the repo.
+  // Keep framework-generated instruction files out of the project.
   agentRules: false,
 };
 
